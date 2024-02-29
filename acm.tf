@@ -1,6 +1,6 @@
 resource "aws_acm_certificate" "ssl" {
   provider                  = aws.us-east-1
-  domain_name               = local.source_domain_name
+  domain_name               = local.source_domain
   validation_method         = "DNS"
 
   tags = var.tags

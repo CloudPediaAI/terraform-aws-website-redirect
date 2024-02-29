@@ -9,10 +9,9 @@ terraform {
 }
 
 locals {
-  source_domain_name = lower(var.source_domain_name)
-  target_domain_name = lower(var.target_domain_name)
-  bucket_name        = local.source_domain_name
-  # origin_access = lower(var.s3_access_method)
+  source_domain = lower(var.source_domain)
+  target_domain = lower(var.target_domain)
+  bucket_name   = local.source_domain
 }
 
 data "aws_caller_identity" "current" {}

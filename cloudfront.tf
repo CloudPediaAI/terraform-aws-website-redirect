@@ -1,7 +1,7 @@
 # Cloudfront for source website S3
-resource "aws_cloudfront_distribution" "public" {
+resource "aws_cloudfront_distribution" "source" {
   origin {
-    domain_name = aws_s3_bucket_website_configuration.web_portal_redirect_config.website_endpoint
+    domain_name = aws_s3_bucket_website_configuration.redirect.website_endpoint
     origin_id   = "S3-${local.bucket_name}"
     custom_origin_config {
       http_port              = 80
@@ -16,20 +16,6 @@ resource "aws_cloudfront_distribution" "public" {
   comment             = "CloudFront for ${local.bucket_name}"
 
   aliases = [local.bucket_name] 
-
-  # custom_error_response {
-  #   error_caching_min_ttl = 10
-  #   error_code            = 404
-  #   response_code         = 200
-  #   response_page_path    = "/index.html"
-  # }
-
-  # custom_error_response {
-  #   error_caching_min_ttl = 10
-  #   error_code            = 403
-  #   response_code         = 200
-  #   response_page_path    = "/index.html"
-  # }
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
@@ -51,8 +37,6 @@ resource "aws_cloudfront_distribution" "public" {
     default_ttl            = 86400
     max_ttl                = 31536000
   }
-
-  # web_acl_id
 
   restrictions {
     geo_restriction {
